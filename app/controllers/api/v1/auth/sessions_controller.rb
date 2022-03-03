@@ -10,7 +10,6 @@ class Api::V1::Auth::SessionsController < ApplicationController
 			if @user.authenticate(params[:password])
 				@token = jwt_session_create @user.id
 				if @token
-					@token = "Bearer #{@token}"
 					return success_session_created
 				else
 					return error_token_create
@@ -24,7 +23,7 @@ class Api::V1::Auth::SessionsController < ApplicationController
 	end
 
 	def validate_token
-		@token = request.headers['Authorization']
+		@token = request.headers['Authorization'].split(' ').last
 		@user = current_user
 		success_valid_token
 	end

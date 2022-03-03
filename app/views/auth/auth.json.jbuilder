@@ -1,4 +1,2 @@
-json.Authorization @token
-json.user do
-  json.partial! "users/self", user: @user
-end
+json.token @token
+json.user { json.partial! 'users/self', user: @user }
