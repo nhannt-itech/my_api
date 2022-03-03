@@ -29,7 +29,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_03_02_142142) do
 
   create_table "user_verifications", force: :cascade do |t|
     t.bigint "user_id", null: false
-    t.string "status"
+    t.string "status", default: "pending"
     t.string "token"
     t.string "verify_type"
     t.datetime "created_at", null: false
