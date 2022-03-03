@@ -45,6 +45,8 @@ gem "jwt", "~> 2.3.0"
 # for environment variables
 gem "figaro", "~> 1.2.0"
 
+# format code
+gem 'rubocop', require: false
 
 
 group :development, :test do

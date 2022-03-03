@@ -3,7 +3,7 @@ class CreateSessions < ActiveRecord::Migration[7.0]
     create_table :sessions do |t|
       t.references :user, null: false, foreign_key: true
       t.datetime :last_used_at
-      t.boolean :status
+      t.boolean :status, default: true
       t.string :token
 
       t.timestamps
