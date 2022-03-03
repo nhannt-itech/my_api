@@ -48,6 +48,8 @@ gem "figaro", "~> 1.2.0"
 # format code
 gem 'rubocop', require: false
 
+# Integrate using our Web API or SMTP Relay
+gem 'sendgrid-ruby'
 
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
