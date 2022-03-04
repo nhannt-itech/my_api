@@ -1,6 +1,6 @@
 class User < ApplicationRecord
 	has_secure_password
-	require 'send_email'
+	require 'send_email_job'
 
 	validates :name, presence: true
 	validates :email,
@@ -40,8 +40,7 @@ class User < ApplicationRecord
 	def send_confirm_email
 		unless confirmed?
 			verification = UserVerification.create(user_id: id, verify_type: :confirm_email)
-			SendEmail.confirm_email(email, verification.token)
-			# ADD Email Job with `url` added in "CONFIRM EMAIL" button
+			SendEmailJob.perform_later(email, verification.token)
 		end
 	end
 
