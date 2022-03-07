@@ -1,6 +1,5 @@
 module AuthenticateRequest
 	extend ActiveSupport::Concern
-	require 'json_web_token'
 
 	def authenticate_user
 		unless current_user

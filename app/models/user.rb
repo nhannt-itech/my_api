@@ -1,6 +1,5 @@
 class User < ApplicationRecord
 	has_secure_password
-	require 'send_email_job'
 
 	validates :name, presence: true
 	validates :email,

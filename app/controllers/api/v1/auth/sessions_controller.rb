@@ -5,7 +5,9 @@ class Api::V1::Auth::SessionsController < ApplicationController
 
 	def create
 		return error_insufficient_params unless params[:email].present? && params[:password].present?
+
 		@user = User.find_by(email: params[:email])
+
 		if @user
 			if @user.authenticate(params[:password])
 				@token = jwt_session_create @user.id
@@ -52,10 +54,7 @@ class Api::V1::Auth::SessionsController < ApplicationController
 	end
 
 	def error_invalid_credentials
-		render status: :unauthorized,
-		       json: {
-				errors: [I18n.t('errors.controllers.auth.invalid_credentials')],
-		       }
+		render status: 400, json: { errors: [I18n.t('errors.controllers.auth.invalid_credentials')] }
 	end
 
 	def error_token_create

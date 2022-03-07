@@ -1,6 +1,5 @@
 class SendEmailJob < ActiveJob::Base
 	queue_as :default
-	require 'sendgrid-ruby'
 	include SendGrid
 
 	def perform(to_email, token)
