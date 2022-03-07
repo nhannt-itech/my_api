@@ -19,7 +19,7 @@ class User < ApplicationRecord
 	          if: :password_required?
 
 	has_many :sessions, dependent: :destroy
-	has_many :user_verifications, dependent: :destroy
+	has_many :verifications, dependent: :destroy
 
 	before_save :downcase_email!
 	after_create :send_confirm_email
@@ -38,7 +38,9 @@ class User < ApplicationRecord
 
 	def send_confirm_email
 		unless confirmed?
-			verification = UserVerification.create(user_id: id, verify_type: :confirm_email)
+			verification = Verification.create user_id: id
+			confirm_email = ResetEmail.create
+			verification.update_attribute(:verificationable, confirm_email)
 			SendEmailJob.perform_later(email, verification.token)
 		end
 	end

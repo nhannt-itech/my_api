@@ -1,0 +1,3 @@
+class ConfirmationService < ApplicationService
+  
+end

@@ -1,6 +1,6 @@
 require "test_helper"
 
-class UserVerificationTest < ActiveSupport::TestCase
+class ResetEmailTest < ActiveSupport::TestCase
   # test "the truth" do
   #   assert true
   # end
