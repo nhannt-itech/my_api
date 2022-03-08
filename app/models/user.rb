@@ -39,7 +39,7 @@ class User < ApplicationRecord
 	def send_confirm_email
 		unless confirmed?
 			verification = Verification.create user_id: id
-			confirm_email = ResetEmail.create
+			confirm_email = ConfirmEmail.create
 			verification.update_attribute(:verificationable, confirm_email)
 			SendEmailJob.perform_later(email, verification.token)
 		end

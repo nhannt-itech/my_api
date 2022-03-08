@@ -1,6 +1,6 @@
 class Verification < ApplicationRecord
 	TOKEN_LENGTH = 32
-	TOKEN_LIFETIME = 6.hours
+	TOKEN_LIFETIME = 24.hours
 
 	validates :status, presence: true, inclusion: %w[pending done failed]
 	validates :token, presence: true, uniqueness: { case_sensitive: true }
@@ -22,4 +22,3 @@ class Verification < ApplicationRecord
 			end
 	end
 end
-

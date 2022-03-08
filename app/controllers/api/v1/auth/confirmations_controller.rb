@@ -2,32 +2,14 @@ class Api::V1::Auth::ConfirmationsController < ApplicationController
 	include CreateSession
 
 	def confirm_email
-		unless params[:token]
-			return(
-				render status: :unprocessable_entity,
-				       json: {
-						errors: [I18n.t('errors.controllers.insufficient_params')],
-				       }
-			)
-		end
-
-		verification = Verification.search(:pending, :confirm_email, params[:token])
-		if verification.nil?
-			return(
-				render status: :unauthorized,
-				       json: {
-						errors: [I18n.t('errors.controllers.verifications.invalid_token')],
-				       }
-			)
-		end
-		if (verification.created_at + Verification::TOKEN_LIFETIME) > Time.now
-			verification.user.confirm
-			verification.update(status: :done)
-			@token = jwt_session_create verification.user_id
-
+		result = ConfirmationsService.confirm_email?(params[:token])
+		if result
 			render status: :ok, json: { message: I18n.t('messages.confirm_email') }
 		else
-			render status: :unauthorized, json: { errors: [I18n.t('errors.controllers.verifications.late')] }
+			render status: :unauthorized,
+			       json: {
+					errors: [I18n.t('errors.controllers.verifications.invalid_token')],
+			       }
 		end
 	end
 
