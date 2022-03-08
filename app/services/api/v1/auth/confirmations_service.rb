@@ -1,3 +1,0 @@
-class ConfirmationService < ApplicationService
-  
-end

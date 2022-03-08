@@ -5,22 +5,16 @@ class Api::V1::Auth::SessionsController < ApplicationController
 
 	def create
 		return error_insufficient_params unless params[:email].present? && params[:password].present?
-
-		@user = User.find_by(email: params[:email])
-
-		if @user
-			if @user.authenticate(params[:password])
-				@token = jwt_session_create @user.id
-				if @token
-					return success_session_created
-				else
-					return error_token_create
-				end
-			else
-				return error_invalid_credentials
-			end
+		result = SessionsService.create(params[:email], params[:password])
+		if result
+			@token = result[:token]
+			@user = result[:user]
+			response.headers['Authorization'] = "Bearer #{@token}"
+			return render status: :created, template: 'auth/auth'
 		else
-			return error_invalid_credentials
+			return(
+				render status: 400, json: { errors: [I18n.t('errors.controllers.auth.invalid_credentials')] }
+			)
 		end
 	end
 
@@ -39,10 +33,7 @@ class Api::V1::Auth::SessionsController < ApplicationController
 
 	protected
 
-	def success_session_created
-		response.headers['Authorization'] = "Bearer #{@token}"
-		render status: :created, template: 'auth/auth'
-	end
+	def success_session_created; end
 
 	def success_valid_token
 		response.headers['Authorization'] = "Bearer #{@token}"
@@ -53,9 +44,7 @@ class Api::V1::Auth::SessionsController < ApplicationController
 		render status: :no_content, json: {}
 	end
 
-	def error_invalid_credentials
-		render status: 400, json: { errors: [I18n.t('errors.controllers.auth.invalid_credentials')] }
-	end
+	def error_invalid_credentials; end
 
 	def error_token_create
 		render status: :unprocessable_entity,

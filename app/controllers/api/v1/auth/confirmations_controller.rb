@@ -26,8 +26,6 @@ class Api::V1::Auth::ConfirmationsController < ApplicationController
 			@token = jwt_session_create verification.user_id
 
 			render status: :ok, json: { message: I18n.t('messages.confirm_email') }
-			# Redirect to the page that says the email is confirmed successfully or can be redirected to the app
-			# redirect_to "#{ENV['REDIRECT_CONFIRM_EMAIL']}?token=#{@token}"
 		else
 			render status: :unauthorized, json: { errors: [I18n.t('errors.controllers.verifications.late')] }
 		end
