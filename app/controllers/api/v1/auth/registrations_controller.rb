@@ -1,46 +1,17 @@
 class Api::V1::Auth::RegistrationsController < ApplicationController
-	include CreateSession
 	before_action :authenticate_user, only: :destroy
 
 	def create
-		@user = User.new(registration_params)
-
-		if @user.save
-			@token = jwt_session_create @user.id
-			if @token
-				return success_user_created
-			else
-				return error_token_create
-			end
+		result = RegistrationsService.create?(registration_params)
+		if result
+			render status: :created, json: {}
 		else
-			error_user_save
+			render status: :unprocessable_entity, json: { errors: 'missing' }
 		end
 	end
 
 	def destroy
 		current_user.destroy
-		success_user_destroy
-	end
-
-	protected
-
-	def success_user_created
-		response.headers['Authorization'] = "Bearer #{@token}"
-		render status: :created, template: 'auth/auth'
-	end
-
-	def error_token_create
-		render status: :unprocessable_entity,
-		       json: {
-				errors: [I18n.t('errors.controllers.auth.token_not_created')],
-		       }
-	end
-
-	def error_user_save
-		render status: :unprocessable_entity, json: { errors: @user.errors.full_messages }
-	end
-
-	def success_user_destroy
 		render status: :no_content, json: {}
 	end
 

@@ -9,4 +9,14 @@ class SessionsService < ApplicationService
 			return nil
 		end
 	end
+
+	def self.destroy?(token)
+		session = Session.find_by(token: JsonWebToken.decode(token)[:token])
+		if session
+			session.update(status: false)
+			true
+		else
+			false
+		end
+	end
 end
