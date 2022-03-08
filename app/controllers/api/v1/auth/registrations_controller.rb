@@ -4,15 +4,15 @@ class Api::V1::Auth::RegistrationsController < ApplicationController
 	def create
 		result = RegistrationsService.create?(registration_params)
 		if result
-			render status: :created, json: {}
+			render status: :ok, json: { success: true, message: 'Register successfully' }
 		else
-			render status: :unprocessable_entity, json: { errors: 'error when register email' }
+			render status: 400, json: { success: false, message: 'Error when register email!' }
 		end
 	end
 
 	def destroy
 		current_user.destroy
-		render status: :no_content, json: {}
+		render status: :ok, json: { success: true, message: 'Destroy user successfully' }
 	end
 
 	private

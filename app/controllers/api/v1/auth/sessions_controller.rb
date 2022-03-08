@@ -6,25 +6,29 @@ class Api::V1::Auth::SessionsController < ApplicationController
 		if result
 			@token = result[:token]
 			@user = result[:user]
-			return render status: :created, template: 'auth/auth'
+			render status: :created, template: 'auth/auth'
 		else
-			render status: 400, json: { errors: [I18n.t('errors.controllers.auth.invalid_credentials')] }
+			render status: 400,
+			       json: {
+					success: false,
+					message: 'Email/Password is not correct. Please try again.',
+			       }
 		end
 	end
 
 	def validate_token
 		@token = request.headers['Authorization'].split(' ').last
 		@user = current_user
-		return render status: :ok, template: 'auth/auth'
+		render status: :ok, template: 'auth/auth'
 	end
 
 	def destroy
 		@token = request.headers['Authorization'].split(' ').last
 		result = SessionService.destroy?(@token)
 		if result
-			return render status: 200, json: {}
+			render status: :ok, json: { success: true, message: 'destroy session successfully!' }
 		else
-			return render status: 400, json: { success: false }
+			render status: 400, json: { success: false, message: 'Error when destroy session.' }
 		end
 	end
 end
