@@ -24,20 +24,8 @@ class User < ApplicationRecord
 	before_save :downcase_email!
 	after_create :send_confirm_email
 
-	def confirmed?
-		!email_confirmed_at.nil?
-	end
-
-	def confirm
-		update(email_confirmed_at: Time.now)
-	end
-
-	def unconfirm
-		update(email_confirmed_at: nil)
-	end
-
 	def send_confirm_email
-		unless confirmed?
+		unless !email_confirmed_at.nil?
 			verification = Verification.create user_id: id
 			confirm_email = ConfirmEmail.create
 			verification.update_attribute(:verificationable, confirm_email)

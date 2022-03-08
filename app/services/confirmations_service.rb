@@ -1,4 +1,4 @@
-class ConfirmationsService < ApplicationService
+class ConfirmationsService
 	def self.confirm_email?(token)
 		verification = Verification.find_by(status: 'pending', token: token)
 		if verification && ((verification.created_at + Verification::TOKEN_LIFETIME) > Time.now)

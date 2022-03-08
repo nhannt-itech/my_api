@@ -19,9 +19,10 @@ module AuthenticateRequest
 
 			user = User.find_by(id: data[:user_id])
 
-			session = Session.search(data[:user_id], data[:token])
+			session = Session.find_by(token: data[:token], status: true, user_id: data[:user_id])
+
 			if user && session && !session.is_late?
-				session.used
+				session.update(last_used_at: Time.now)
 				@current_user ||= user
 			end
 		end

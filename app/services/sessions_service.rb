@@ -1,4 +1,4 @@
-class SessionsService < ApplicationService
+class SessionsService
 	def self.create(email, password)
 		user = User.find_by(email: email)
 		if user && user.authenticate(password)

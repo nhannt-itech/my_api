@@ -1,4 +1,4 @@
-class RegistrationsService < ApplicationService
+class RegistrationsService
 	def self.create?(registration_params)
 		@user = User.new(registration_params)
 		puts registration_params

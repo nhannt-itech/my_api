@@ -6,7 +6,7 @@ class Api::V1::Auth::RegistrationsController < ApplicationController
 		if result
 			render status: :created, json: {}
 		else
-			render status: :unprocessable_entity, json: { errors: 'missing' }
+			render status: :unprocessable_entity, json: { errors: 'error when register email' }
 		end
 	end
 

@@ -18,23 +18,11 @@ class Session < ApplicationRecord
 		end
 	end
 
-	def self.search(user_id, token)
-		Session.find_by(token: token, status: true, user_id: user_id)
-	end
-
 	def used
 		update(last_used_at: Time.now)
 	end
 
-	def close
-		update(status: false)
-	end
-
 	def generate_token
-		self.token =
-			loop do
-				random_token = SecureRandom.base58(TOKEN_LENGTH)
-				break random_token unless Session.exists?(token: random_token)
-			end
+		self.token = SecureRandom.uuid
 	end
 end
