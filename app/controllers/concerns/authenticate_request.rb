@@ -21,7 +21,7 @@ module AuthenticateRequest
 
 			session = Session.find_by(token: data[:token], status: true, user_id: data[:user_id])
 
-			if user && session && !session.is_late?
+			if user && session && !session_expired?(session)
 				session.update(last_used_at: Time.now)
 				@current_user ||= user
 			end
@@ -37,6 +37,17 @@ module AuthenticateRequest
 			rescue Error => e
 				return render json: { errors: [e.message] }, status: :unauthorized
 			end
+		end
+	end
+
+	private
+
+	def session_expired?(session)
+		if (session.last_used_at + Session::TOKEN_LIFETIME) >= Time.now
+			false
+		else
+			session.update(status: false)
+			true
 		end
 	end
 end

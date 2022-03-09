@@ -4,7 +4,7 @@ class CreateSessions < ActiveRecord::Migration[7.0]
 			t.references :user, null: false, foreign_key: true
 			t.datetime :last_used_at, default: Time.now
 			t.boolean :status, default: true
-			t.string :token
+			t.string :token, default: SecureRandom.uuid
 
 			t.timestamps
 		end
