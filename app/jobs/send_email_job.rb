@@ -8,7 +8,10 @@ class SendEmailJob < ActiveJob::Base
 		subject = 'Confirm your email in My APP'
 
 		content =
-			Content.new(type: 'text/plain', value: "#{ENV['CLIENT_URL']}/identity/confirmation/#{token}")
+			Content.new(
+				type: 'text/plain',
+				value: "#{ENV['CLIENT_URL']}/identity/confirm-email?token=#{token}",
+			)
 		mail = Mail.new(from, subject, to, content)
 
 		sg = SendGrid::API.new(api_key: ENV['SENDGRID_API_KEY'])
