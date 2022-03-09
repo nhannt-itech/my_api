@@ -7,7 +7,6 @@ class Session < ApplicationRecord
 	belongs_to :user
 
 	before_validation :generate_token, on: :create
-	after_create :used
 
 	def is_late?
 		if (last_used_at + TOKEN_LIFETIME) >= Time.now
@@ -16,10 +15,6 @@ class Session < ApplicationRecord
 			update(status: false)
 			true
 		end
-	end
-
-	def used
-		update(last_used_at: Time.now)
 	end
 
 	def generate_token

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_03_07_144851) do
+ActiveRecord::Schema[7.0].define(version: 2022_03_09_032233) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -26,7 +26,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_03_07_144851) do
 
   create_table "sessions", force: :cascade do |t|
     t.bigint "user_id", null: false
-    t.datetime "last_used_at"
+    t.datetime "last_used_at", default: "2022-03-09 03:23:51"
     t.boolean "status", default: true
     t.string "token"
     t.datetime "created_at", null: false
