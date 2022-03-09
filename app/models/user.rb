@@ -16,7 +16,7 @@ class User < ApplicationRecord
 	          format: {
 			with: PasswordRegex,
 			message: I18n.t('errors.models.user.format_password'),
-	          },
+	          }
 
 	has_many :sessions, dependent: :destroy
 	has_many :verifications, dependent: :destroy

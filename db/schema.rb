@@ -13,6 +13,7 @@
 ActiveRecord::Schema[7.0].define(version: 2022_03_09_032233) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+  enable_extension "uuid-ossp"
 
   create_table "confirm_emails", force: :cascade do |t|
     t.datetime "created_at", null: false
@@ -26,9 +27,9 @@ ActiveRecord::Schema[7.0].define(version: 2022_03_09_032233) do
 
   create_table "sessions", force: :cascade do |t|
     t.bigint "user_id", null: false
-    t.datetime "last_used_at", default: "2022-03-09 03:36:34"
+    t.datetime "last_used_at", default: "2022-03-09 05:13:08"
     t.boolean "status", default: true
-    t.string "token", default: "eb077c48-95f8-4195-8fa4-17f9f8363571"
+    t.uuid "token", default: -> { "uuid_generate_v4()" }
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["last_used_at"], name: "index_sessions_on_last_used_at"
@@ -51,7 +52,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_03_09_032233) do
   create_table "verifications", force: :cascade do |t|
     t.bigint "user_id", null: false
     t.string "status", default: "pending"
-    t.string "token", default: "bde365fb-250d-4af1-b45a-e202cbf3610a"
+    t.uuid "token", default: -> { "uuid_generate_v4()" }
     t.string "verificationable_type"
     t.bigint "verificationable_id"
     t.datetime "created_at", null: false

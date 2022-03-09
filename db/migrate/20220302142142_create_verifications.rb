@@ -3,7 +3,7 @@ class CreateVerifications < ActiveRecord::Migration[7.0]
 		create_table :verifications do |t|
 			t.references :user, null: false, foreign_key: true
 			t.string :status, default: 'pending'
-			t.string :token, default: SecureRandom.uuid
+			t.uuid :token, default: 'uuid_generate_v4()'
 			t.references :verificationable, polymorphic: true, index: true
 
 			t.timestamps

@@ -7,7 +7,7 @@ class RegistrationsService
 			verification = Verification.create user_id: @user.id
 			confirm_email = ConfirmEmail.create
 			verification.update_attribute(:verificationable, confirm_email)
-			SendEmailJob.perform_now(email, verification.token)
+			SendEmailJob.perform_now(@user.email, verification.token)
 			return true
 		else
 			puts @user.errors.full_messages
