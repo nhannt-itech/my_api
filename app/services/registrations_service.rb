@@ -4,7 +4,8 @@ class RegistrationsService
 		@user = User.new(registration_params)
 		@user.email&.downcase!
 		if @user.save
-			verification = Verification.create user_id: @user.id
+			new_token = SecureRandom.uuid
+			verification = Verification.create user_id: @user.id, token: new_token
 			confirm_email = ConfirmEmail.create
 			verification.update_attribute(:verificationable, confirm_email)
 			SendEmailJob.perform_now(@user.email, verification.token)
