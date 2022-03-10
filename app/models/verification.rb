@@ -20,5 +20,4 @@ class Verification < ApplicationRecord
 
 	belongs_to :verificationable, polymorphic: true
 	belongs_to :user
-
 end
