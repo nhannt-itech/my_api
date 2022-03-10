@@ -7,7 +7,7 @@ class CreateAuctionItems < ActiveRecord::Migration[7.0]
 			t.integer :bids
 			t.datetime :end_at
 			t.references :user, null: false, foreign_key: true
-			t.string :image
+			t.string :avatar
 
 			t.timestamps
 		end
