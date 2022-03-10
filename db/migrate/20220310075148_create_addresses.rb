@@ -1,10 +1,10 @@
 class CreateAddresses < ActiveRecord::Migration[7.0]
-  def change
-    create_table :addresses do |t|
-      t.string :full_address
-      t.references :addressable, polymorphic: true, null: false
+	def change
+		create_table :addresses do |t|
+			t.string :full_address
+			t.references :addressable, polymorphic: true, null: false, index: true
 
-      t.timestamps
-    end
-  end
+			t.timestamps
+		end
+	end
 end

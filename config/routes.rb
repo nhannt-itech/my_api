@@ -10,6 +10,7 @@ Rails.application.routes.draw do
 				get 'confirm_email', to: 'confirmations#confirm_email'
 				put 'resend_confirm_email', to: 'confirmations#resend_confirm_email'
 			end
+			resources :auction_items
 		end
 	end
 
