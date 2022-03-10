@@ -10,10 +10,19 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_03_10_072145) do
+ActiveRecord::Schema[7.0].define(version: 2022_03_10_075148) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
   enable_extension "uuid-ossp"
+
+  create_table "addresses", force: :cascade do |t|
+    t.string "full_address"
+    t.string "addressable_type", null: false
+    t.bigint "addressable_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["addressable_type", "addressable_id"], name: "index_addresses_on_addressable"
+  end
 
   create_table "auction_items", force: :cascade do |t|
     t.string "title"
@@ -31,15 +40,6 @@ ActiveRecord::Schema[7.0].define(version: 2022_03_10_072145) do
   create_table "confirm_emails", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-  end
-
-  create_table "images", force: :cascade do |t|
-    t.string "link"
-    t.string "imageable_type", null: false
-    t.bigint "imageable_id", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["imageable_type", "imageable_id"], name: "index_images_on_imageable"
   end
 
   create_table "reset_emails", force: :cascade do |t|
