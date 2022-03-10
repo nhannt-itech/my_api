@@ -1,0 +1,19 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  title: MyString
+  price: 1.5
+  shipping_cost: 1.5
+  bids: 1
+  end_at: 2022-03-10 14:02:30
+  user_id: one
+  image: MyString
+
+two:
+  title: MyString
+  price: 1.5
+  shipping_cost: 1.5
+  bids: 1
+  end_at: 2022-03-10 14:02:30
+  user_id: two
+  image: MyString

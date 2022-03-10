@@ -10,10 +10,23 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_03_09_032233) do
+ActiveRecord::Schema[7.0].define(version: 2022_03_10_070230) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
   enable_extension "uuid-ossp"
+
+  create_table "auction_items", force: :cascade do |t|
+    t.string "title"
+    t.float "price"
+    t.float "shipping_cost"
+    t.integer "bids"
+    t.datetime "end_at"
+    t.bigint "user_id", null: false
+    t.string "image"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_auction_items_on_user_id"
+  end
 
   create_table "confirm_emails", force: :cascade do |t|
     t.datetime "created_at", null: false
@@ -64,6 +77,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_03_09_032233) do
     t.index ["verificationable_type"], name: "index_verifications_on_verificationable_type"
   end
 
+  add_foreign_key "auction_items", "users"
   add_foreign_key "sessions", "users"
   add_foreign_key "verifications", "users"
 end
