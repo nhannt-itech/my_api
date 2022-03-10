@@ -2,7 +2,7 @@ class Api::V1::Auth::RegistrationsController < ApplicationController
 	before_action :authenticate_user, only: :destroy
 
 	def create
-		result = RegistrationsService.create?(registration_params)
+		result = RegistrationsService::Create.call(registration_params)
 		if result
 			render status: :ok, json: { success: true, message: 'Register successfully' }
 		else

@@ -2,7 +2,7 @@ class Api::V1::Auth::SessionsController < ApplicationController
 	before_action :authenticate_user, only: %i[validate_token destroy]
 
 	def create
-		result = SessionsService.create(params[:email], params[:password])
+		result = SessionsService::Create.call(params[:email], params[:password])
 		if result
 			@token = result[:token]
 			@user = result[:user]
@@ -24,7 +24,7 @@ class Api::V1::Auth::SessionsController < ApplicationController
 
 	def destroy
 		@token = request.headers['Authorization'].split(' ').last
-		result = SessionService.destroy?(@token)
+		result = SessionsService::Destroy.call(@token)
 		if result
 			render status: :ok, json: { success: true, message: 'destroy session successfully!' }
 		else

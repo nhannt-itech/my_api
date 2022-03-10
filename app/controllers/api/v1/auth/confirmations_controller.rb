@@ -2,7 +2,7 @@ class Api::V1::Auth::ConfirmationsController < ApplicationController
 	include CreateSession
 
 	def confirm_email
-		result = ConfirmationsService.confirm_email?(params[:token])
+		result = ConfirmationsService::ConfirmEmail.call(params[:token])
 		if result
 			render status: :ok, json: { success: true, message: 'confirm email successfully!' }
 		else

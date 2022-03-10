@@ -27,7 +27,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_03_09_032233) do
 
   create_table "sessions", force: :cascade do |t|
     t.bigint "user_id", null: false
-    t.datetime "last_used_at", default: "2022-03-09 05:13:08"
+    t.datetime "last_used_at", default: "2022-03-09 09:08:58"
     t.boolean "status", default: true
     t.uuid "token", default: -> { "uuid_generate_v4()" }
     t.datetime "created_at", null: false
