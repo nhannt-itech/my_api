@@ -10,5 +10,7 @@
 #  updated_at       :datetime         not null
 #
 class Address < ApplicationRecord
-  belongs_to :addressable, polymorphic: true
+	belongs_to :addressable, polymorphic: true
+
+	validates :full_address, presence: true
 end

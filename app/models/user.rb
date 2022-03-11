@@ -34,7 +34,7 @@ class User < ApplicationRecord
 	has_many :sessions, dependent: :destroy
 	has_many :verifications, dependent: :destroy
 	has_many :auction_items, dependent: :destroy
-	has_many :address, as: :addressable, dependent: :destroy
+	has_many :addresses, as: :addressable, dependent: :destroy
 
 	private
 

@@ -18,5 +18,5 @@ class AuctionItem < ApplicationRecord
 
 	validates :title, :price, :shipping_cost, :bids, :end_at, :avatar, presence: true
 
-	has_many :images, as: :addressable, dependent: :destroy
+	has_many :addresses, as: :addressable, dependent: :destroy
 end

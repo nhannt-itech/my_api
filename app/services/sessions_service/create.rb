@@ -11,7 +11,7 @@ module SessionsService
 			user = User.find_by(email: @email)
 			if user && user.authenticate(@password)
 				new_token = SecureRandom.uuid
-				session = Session.create(user_id: user.id, token: new_token)
+				session = Session.create(user_id: user.id, token: new_token, last_used_at: Time.now)
 				token = JsonWebToken.encode({ user_id: user.id, token: session.token })
 				return { token: token, user: user }
 			else
