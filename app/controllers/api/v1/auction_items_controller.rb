@@ -2,12 +2,7 @@ class Api::V1::AuctionItemsController < ApplicationController
 	before_action :authenticate_user, only: %i[create]
 
 	def index
-		result = AuctionItemsService::GetAll.call
-		if result.success?
-			render status: :ok, json: { success: true, data: result.data }
-		else
-			render status: 400, json: { success: false, message: result.message, errors: result.errors }
-		end
+		@result = AuctionItemsService::GetAll.call(params[:offset], params[:pagesize])
 	end
 
 	def create
